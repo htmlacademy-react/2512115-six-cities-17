@@ -1,6 +1,6 @@
-import Header from "../../components/header/header";
-import Tabs from "../../components/tabs/tabs";
-import OfferCard from "../../components/offer-card/offer-card";
+import Header from '../../components/header/header';
+import Tabs from '../../components/tabs/tabs';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type MainProps = {
   offersCount: number;

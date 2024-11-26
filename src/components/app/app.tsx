@@ -1,4 +1,4 @@
-import Main from "../../pages/main/main";
+import Main from '../../pages/main/main';
 // import Offer from "../../pages/offer/offer";
 // import Favorites from "../../pages/favorites/favorites";
 // import Login from "../../pages/login/login";

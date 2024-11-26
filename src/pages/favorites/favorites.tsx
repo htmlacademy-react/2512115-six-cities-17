@@ -1,4 +1,4 @@
-import Footer from "../../components/footer/footer";
+import Footer from '../../components/footer/footer';
 
 function Favorites(): JSX.Element {
   return (
@@ -54,7 +54,7 @@ function Favorites(): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{ width: "100%" }} />
+                          <span style={{ width: '100%' }} />
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -98,7 +98,7 @@ function Favorites(): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{ width: "80%" }} />
+                          <span style={{ width: '80%' }} />
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -153,7 +153,7 @@ function Favorites(): JSX.Element {
                       </div>
                       <div className="place-card__rating rating">
                         <div className="place-card__stars rating__stars">
-                          <span style={{ width: "100%" }} />
+                          <span style={{ width: '100%' }} />
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
