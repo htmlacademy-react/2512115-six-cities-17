@@ -1,6 +1,7 @@
 import Header from '../../components/header/header';
 import Tabs from '../../components/tabs/tabs';
 import OfferCard from '../../components/offer-card/offer-card';
+import { Helmet } from 'react-helmet-async';
 
 type MainProps = {
   offersCount: number;
@@ -10,6 +11,9 @@ function Main({offersCount}:MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
+      <Helmet>
+        <title>6 cities - Main</title>
+      </Helmet>
       <Header />
       <Tabs />
       <div className="cities">
