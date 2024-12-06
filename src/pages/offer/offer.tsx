@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import Header from '../../components/header/header';
 
 function Offer(): JSX.Element {
   return (
@@ -7,7 +6,6 @@ function Offer(): JSX.Element {
       <Helmet>
         <title>6 cities - Offer</title>
       </Helmet>
-      <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">

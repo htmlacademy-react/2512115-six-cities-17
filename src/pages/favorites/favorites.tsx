@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
 
 function Favorites(): JSX.Element {
   return (
@@ -8,7 +7,6 @@ function Favorites(): JSX.Element {
       <Helmet>
         <title>6 cities - Favorites</title>
       </Helmet>
-      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
