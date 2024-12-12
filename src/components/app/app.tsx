@@ -8,19 +8,18 @@ import Login from '../../pages/login/login';
 import Error from '../../pages/error/error';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import Layout from './layout';
+import Layout from '../layout/layout';
 
 type AppProps = {
   offersCount: number;
-  headerRightSide: boolean;
 }
 
-function App({offersCount, headerRightSide}: AppProps): JSX.Element {
+function App({offersCount}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout headerRightSide={headerRightSide} />}>
+          <Route path="/" element={<Layout/>}>
             <Route index
               path={AppRoute.Main}
               element={<Main offersCount={offersCount}/>}
@@ -40,7 +39,7 @@ function App({offersCount, headerRightSide}: AppProps): JSX.Element {
               }
             />
             <Route
-              path={AppRoute.DevOfferLogged}
+              path={AppRoute.Offer}
               element={<Offer/>}
             />
             <Route
