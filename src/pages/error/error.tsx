@@ -1,4 +1,3 @@
-import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -9,7 +8,6 @@ function Error(): JSX.Element {
       <Helmet>
         <title>6 cities - error</title>
       </Helmet>
-      <Header/>
       <section className="error404">
         <div className="error404-page" style={{ textAlign: 'center' }}>
           <span>Страница не найдена</span><br/>

@@ -1,12 +1,19 @@
 import Tabs from '../../components/tabs/tabs';
-import OfferCard from '../../components/offer-card/offer-card';
 import { Helmet } from 'react-helmet-async';
+import { OfferType } from '../../types';
+import OffersList from '../../components/offers-list/offers-list';
+import { useState } from 'react';
 
 type MainProps = {
   offersCount: number;
+  offers: OfferType[];
 };
 
-function Main({offersCount}:MainProps): JSX.Element {
+function Main({offersCount, offers}:MainProps): JSX.Element {
+  const [isActiveOffer, setIsActiveOffer] = useState<string | null>(null);
+console.log(isActiveOffer);
+  const handleActiveOfferChange = (id: string | null) => setIsActiveOffer(id);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -43,13 +50,7 @@ function Main({offersCount}:MainProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-              </div>
+              <OffersList onHandleActiveOfferChange={handleActiveOfferChange} offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

@@ -9,12 +9,14 @@ import Error from '../../pages/error/error';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from '../layout/layout';
+import { OfferType } from '../../types';
 
 type AppProps = {
   offersCount: number;
+  offers: OfferType[];
 }
 
-function App({offersCount}: AppProps): JSX.Element {
+function App({offersCount, offers}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -22,7 +24,7 @@ function App({offersCount}: AppProps): JSX.Element {
           <Route path="/" element={<Layout/>}>
             <Route index
               path={AppRoute.Main}
-              element={<Main offersCount={offersCount}/>}
+              element={<Main offersCount={offersCount} offers={offers}/>}
             />
             <Route
               path={AppRoute.Login}
@@ -32,7 +34,7 @@ function App({offersCount}: AppProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute
-                  authorizationStatus={AuthorizationStatus.NoAuth}
+                  authorizationStatus={AuthorizationStatus.Auth}
                 >
                   <Favorites/>
                 </PrivateRoute>

@@ -1,7 +1,16 @@
+import { OfferType } from '../../types';
 
-function OfferCard(): JSX.Element {
+type AppProps = {
+  offer: OfferType;
+  onHandleActiveOfferChange: (id: string | null) => void;
+}
+
+function OfferCard({offer, onHandleActiveOfferChange}: AppProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card"
+      onMouseEnter={() => onHandleActiveOfferChange(offer.id)}
+      onMouseLeave={() => onHandleActiveOfferChange(null)}
+    >
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
@@ -9,7 +18,7 @@ function OfferCard(): JSX.Element {
         <a href="#">
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
+            src={offer.previewImage}
             width={260}
             height={200}
             alt="Place image"
@@ -19,7 +28,7 @@ function OfferCard(): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120</b>
+            <b className="place-card__price-value">{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
@@ -44,10 +53,10 @@ function OfferCard(): JSX.Element {
         </div>
         <h2 className="place-card__name">
           <a href="#">
-            Beautiful &amp; luxurious apartment at great location
+            {offer.title}
           </a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
