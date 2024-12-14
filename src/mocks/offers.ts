@@ -100,7 +100,7 @@ export const OFFERS_MOCK: OfferType[] = [
     'price': 495,
     'previewImage': 'https://16.design.htmlacademy.pro/static/hotel/14.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Amsterdam',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,

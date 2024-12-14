@@ -1,11 +1,31 @@
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { Helmet } from 'react-helmet-async';
 
 function Layout() {
   const {pathname} = useLocation();
-  const headerRightSide = pathname !== '/login';
+  const headerRightSide = pathname as AppRoute !== AppRoute.Login;
+  let className = 'page';
+  let titleName = '6 cities:';
+
+  if (pathname as AppRoute === AppRoute.Main) {
+    className += '  page--gray page--main';
+    titleName += ' Main';
+  } else if (pathname as AppRoute === AppRoute.Login) {
+    className += '  page--gray page--login';
+    titleName += ' Login';
+  } else if (pathname as AppRoute === AppRoute.Favorites) {
+    titleName += ' Favorites';
+  } else if (pathname as AppRoute === AppRoute.Offer) {
+    titleName += ' Offer';
+  } else if (pathname === '/*') {
+    titleName += ' Error 404';
+  }
   return (
-    <>
+    <div className={className}>
+      <Helmet>
+        <title>{titleName}</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -44,7 +64,7 @@ function Layout() {
         </div>
       </header>
       <Outlet />
-    </>
+    </div>
   );
 }
 

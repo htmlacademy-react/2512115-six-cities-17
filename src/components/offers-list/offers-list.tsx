@@ -10,7 +10,7 @@ function OffersList({offers, onHandleActiveOfferChange}: AppProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <OfferCard onHandleActiveOfferChange={onHandleActiveOfferChange} key={offer.id} offer={offer} />
+        <OfferCard onHandleActiveOfferChange={onHandleActiveOfferChange} key={offer.id} offer={offer} offerCardType='cities' />
       ))}
     </div>
   );

@@ -1,31 +1,34 @@
-import { OfferType } from '../../types';
+import { Link } from 'react-router-dom';
+import { OfferCardType, OfferType } from '../../types';
+import { AppRoute } from '../../const';
 
 type AppProps = {
   offer: OfferType;
-  onHandleActiveOfferChange: (id: string | null) => void;
+  offerCardType: OfferCardType;
+  onHandleActiveOfferChange?: (id: string | null) => void;
 }
 
-function OfferCard({offer, onHandleActiveOfferChange}: AppProps): JSX.Element {
+function OfferCard({offer, offerCardType, onHandleActiveOfferChange}: AppProps): JSX.Element {
   return (
-    <article className="cities__card place-card"
-      onMouseEnter={() => onHandleActiveOfferChange(offer.id)}
-      onMouseLeave={() => onHandleActiveOfferChange(null)}
+    <article className={`${offerCardType}__card place-card`}
+      onMouseEnter={() => onHandleActiveOfferChange && onHandleActiveOfferChange(offer.id)}
+      onMouseLeave={() => onHandleActiveOfferChange && onHandleActiveOfferChange(null)}
     >
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+      <div className={`${offerCardType}__image-wrapper place-card__image-wrapper`}>
+        <Link to ={AppRoute.Offer.replace(':id', offer.id)}>
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={260}
-            height={200}
+            width={offerCardType === 'cities' ? '260' : '150'}
+            height={offerCardType === 'cities' ? '200' : '110'}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${offerCardType === 'favorites' ? `${offerCardType}__card-info ` : ''}place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">{offer.price}</b>
@@ -47,14 +50,14 @@ function OfferCard({offer, onHandleActiveOfferChange}: AppProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: offerCardType === 'favorites' ? '100%' : '80%' }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">
+          <Link to ={AppRoute.Offer.replace(':id', offer.id)}>
             {offer.title}
-          </a>
+          </Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

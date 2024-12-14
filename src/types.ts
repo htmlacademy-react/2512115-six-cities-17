@@ -6,8 +6,10 @@ export type LocationType = {
   zoom: number;
 };
 
+export type CityName = string;
+
 export type CityType = {
-  name: string;
+  name: CityName;
   location: LocationType;
 };
 
@@ -23,3 +25,7 @@ export type OfferType = {
   isPremium: boolean;
   rating: number;
 };
+
+export type OfferCardType = 'favorites' | 'cities';
+
+export type RatingType = number | null;
