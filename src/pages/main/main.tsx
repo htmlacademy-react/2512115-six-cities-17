@@ -2,6 +2,7 @@ import Tabs from '../../components/tabs/tabs';
 import { OfferType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
 import { useState } from 'react';
+import Map from '../../components/map/map';
 
 type MainProps = {
   offersCount: number;
@@ -47,7 +48,10 @@ function Main({offersCount, offers}:MainProps): JSX.Element {
             <OffersList onHandleActiveOfferChange={handleActiveOfferChange} offers={offers}/>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            {/* <section className="cities__map map" /> */}
+            <section className="cities__map map">
+              <Map offers={offers} isActiveOffer={isActiveOffer} city={offers[0].city} />
+            </section>
           </div>
         </div>
       </div>
