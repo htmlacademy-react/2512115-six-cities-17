@@ -3,7 +3,7 @@ import OfferCard from '../offer-card/offer-card';
 
 type AppProps = {
   offers: OfferType[];
-  onHandleActiveOfferChange: (id: string | null) => void;
+  onHandleActiveOfferChange?: (id: string | null) => void;
 }
 
 function OffersList({offers, onHandleActiveOfferChange}: AppProps) {

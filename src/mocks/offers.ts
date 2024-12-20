@@ -2,7 +2,7 @@ import { OfferType } from '../types';
 
 export const OFFERS_MOCK: OfferType[] = [
   {
-    'id': '2ea87c98-e10a-40c3-b88a-2801903b92ee',
+    'id': 'ae0b85da-7663-4de3-895a-a2402e24a468',
     'title': 'The Joshua Tree House',
     'type': 'apartment',
     'price': 408,
@@ -25,7 +25,7 @@ export const OFFERS_MOCK: OfferType[] = [
     'rating': 1.7
   },
   {
-    'id': '6769fa07-3b2c-4991-b1cf-5c77bc8fe167',
+    'id': '87ce0a00-6838-476d-a60a-19f65d1ca52b',
     'title': 'Waterfront with extraordinary view',
     'type': 'room',
     'price': 209,
@@ -48,7 +48,7 @@ export const OFFERS_MOCK: OfferType[] = [
     'rating': 4.7
   },
   {
-    'id': '4be2257a-f211-48d9-8232-d6b40eef8cf2',
+    'id': '03fa52e3-5c65-47e7-90a2-beec4883d130',
     'title': 'The Joshua Tree House',
     'type': 'apartment',
     'price': 458,
@@ -71,7 +71,7 @@ export const OFFERS_MOCK: OfferType[] = [
     'rating': 3.9
   },
   {
-    'id': 'fddc314d-dbee-44de-a291-b34e8cca74da',
+    'id': '66eb0b3f-db45-4219-9eec-94e0b33841c2',
     'title': 'Waterfront with extraordinary view',
     'type': 'room',
     'price': 199,
@@ -94,7 +94,7 @@ export const OFFERS_MOCK: OfferType[] = [
     'rating': 3.3
   },
   {
-    'id': 'e262ee4e-4ac4-4250-8562-8ae84e455b96',
+    'id': '530f59c9-7003-49a0-9d74-69a5e7c5bb09',
     'title': 'Wood and stone place',
     'type': 'hotel',
     'price': 495,

@@ -14,16 +14,18 @@ function OfferCard({offer, offerCardType, onHandleActiveOfferChange}: AppProps):
       onMouseEnter={() => onHandleActiveOfferChange && onHandleActiveOfferChange(offer.id)}
       onMouseLeave={() => onHandleActiveOfferChange && onHandleActiveOfferChange(null)}
     >
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+      {offer.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className={`${offerCardType}__image-wrapper place-card__image-wrapper`}>
         <Link to ={AppRoute.Offer.replace(':id', offer.id)}>
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={offerCardType === 'cities' ? '260' : '150'}
-            height={offerCardType === 'cities' ? '200' : '110'}
+            width={offerCardType === 'cities' || 'near-places' ? '260' : '150'}
+            height={offerCardType === 'cities' || 'near-places' ? '200' : '110'}
             alt="Place image"
           />
         </Link>
