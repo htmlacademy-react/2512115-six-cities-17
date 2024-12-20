@@ -9,14 +9,15 @@ import Error from '../../pages/error/error';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from '../layout/layout';
-import { OfferType } from '../../types';
+import { CommentType, OfferType } from '../../types';
 
 type AppProps = {
   offersCount: number;
   offers: OfferType[];
+  comments: CommentType[];
 }
 
-function App({offersCount, offers}: AppProps): JSX.Element {
+function App({offersCount, offers, comments}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -42,7 +43,7 @@ function App({offersCount, offers}: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer/>}
+              element={<Offer offers={offers} comments={comments}/>}
             />
             <Route
               path='*'

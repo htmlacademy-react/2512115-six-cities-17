@@ -24,6 +24,18 @@ export type OfferType = {
   rating: number;
 };
 
-export type OfferCardType = 'favorites' | 'cities';
+export type OfferCardType = 'favorites' | 'cities' | 'near-places';
 
 export type RatingType = number | null;
+
+export type CommentType = {
+  id: string;
+  date: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  comment: string;
+  rating: number;
+};

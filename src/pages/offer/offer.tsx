@@ -1,6 +1,33 @@
+import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
+import { CommentType, OfferType } from '../../types';
+import CommentList from '../../components/comment-list/comment-list';
+import OfferCard from '../../components/offer-card/offer-card';
+import Map from '../../components/map/map';
 
-function Offer(): JSX.Element {
+type OffersProps = {
+  offers: OfferType[];
+  comments: CommentType[];
+};
+
+function Offer({offers, comments}: OffersProps): JSX.Element {
+  const { id } = useParams<{ id: string }>();
+  const currentOffer = offers?.find((item) => item.id === id);
+
+  if (!currentOffer) {
+    return (
+      <main className="page__main page__main--offer">
+        <section className="offer">
+          <div className="offer__container container">
+            <div className="offer__wrapper">
+              <p>Предложение не найдено</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -48,12 +75,14 @@ function Offer(): JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            <div className="offer__mark">
-              <span>Premium</span>
-            </div>
+            {currentOffer.isPremium && (
+              <div className="offer__mark">
+                <span>Premium</span>
+              </div>
+            )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                Beautiful &amp; luxurious studio at great location
+                {currentOffer.title}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -67,10 +96,10 @@ function Offer(): JSX.Element {
                 <span style={{ width: '80%' }} />
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">4.8</span>
+              <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
             </div>
             <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">Apartment</li>
+              <li className="offer__feature offer__feature--entire">{currentOffer.type}</li>
               <li className="offer__feature offer__feature--bedrooms">
                 3 Bedrooms
               </li>
@@ -79,7 +108,7 @@ function Offer(): JSX.Element {
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">€120</b>
+              <b className="offer__price-value">€{currentOffer.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
@@ -126,52 +155,20 @@ function Offer(): JSX.Element {
               </div>
             </div>
             <section className="offer__reviews reviews">
-              <h2 className="reviews__title">
-                Reviews · <span className="reviews__amount">1</span>
-              </h2>
-              <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img
-                        className="reviews__avatar user__avatar"
-                        src="img/avatar-max.jpg"
-                        width={54}
-                        height={54}
-                        alt="Reviews avatar"
-                      />
-                    </div>
-                    <span className="reviews__user-name">Max</span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{ width: '80%' }} />
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by
-                      the unique lightness of Amsterdam. The building is green and
-                      from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">
-                      April 2019
-                    </time>
-                  </div>
-                </li>
-              </ul>
+              <CommentList comments={comments}/>
               <CommentForm/>
             </section>
           </div>
         </div>
-        <section className="offer__map map" />
+        <section className="offer__map map">
+          <Map offers={[...offers].sort((a, b) => (a.id === currentOffer.id ? -1 : b.id === currentOffer.id ? 1 : 0)).slice(0, 4)} isActiveOffer={currentOffer.id} city={offers[0].city} />
+        </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <article className="near-places__card place-card">
+            {/* <article className="near-places__card place-card">
               <div className="near-places__image-wrapper place-card__image-wrapper">
                 <a href="#">
                   <img
@@ -305,7 +302,10 @@ function Offer(): JSX.Element {
                 </h2>
                 <p className="place-card__type">Apartment</p>
               </div>
-            </article>
+            </article> */}
+            {offers.filter((offer) => offer.id !== currentOffer.id).slice(0,3).map((offer) => (
+              <OfferCard key={offer.id} offer={offer} offerCardType='near-places' />
+            ))}
           </div>
         </section>
       </div>
