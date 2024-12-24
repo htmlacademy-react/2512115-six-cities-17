@@ -1,18 +1,18 @@
 import { useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/comment-form';
-import { CommentType, OfferType } from '../../types';
+import { CommentType, OfferFullType, OfferType } from '../../types';
 import CommentList from '../../components/comment-list/comment-list';
 import OfferCard from '../../components/offer-card/offer-card';
 import Map from '../../components/map/map';
 
 type OffersProps = {
-  offers: OfferType[];
+  offerFull: OfferFullType[];
   comments: CommentType[];
 };
 
-function Offer({offers, comments}: OffersProps): JSX.Element {
+function Offer({offerFull, comments}: OffersProps): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const currentOffer = offers?.find((item) => item.id === id);
+  const currentOffer = offerFull?.find((item) => item.id === id);
 
   if (!currentOffer) {
     return (
@@ -161,7 +161,12 @@ function Offer({offers, comments}: OffersProps): JSX.Element {
           </div>
         </div>
         <section className="offer__map map">
-          <Map offers={[...offers].sort((a, b) => (a.id === currentOffer.id ? -1 : b.id === currentOffer.id ? 1 : 0)).slice(0, 4)} isActiveOffer={currentOffer.id} city={offers[0].city} />
+          <Map
+            offerFull={[...offerFull].sort((a, b) => (a.id === currentOffer.id ? -1 : b.id === currentOffer.id ? 1 : 0)).slice(0, 4)}
+            isActiveOffer={currentOffer.id}
+            city={offerFull[0].city}
+            className="offer"
+          />
         </section>
       </section>
       <div className="container">
@@ -303,7 +308,7 @@ function Offer({offers, comments}: OffersProps): JSX.Element {
                 <p className="place-card__type">Apartment</p>
               </div>
             </article> */}
-            {offers.filter((offer) => offer.id !== currentOffer.id).slice(0,3).map((offer) => (
+            {offerFull.filter((offer) => offer.id !== currentOffer.id).slice(0,3).map((offer) => (
               <OfferCard key={offer.id} offer={offer} offerCardType='near-places' />
             ))}
           </div>

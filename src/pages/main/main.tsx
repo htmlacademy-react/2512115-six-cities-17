@@ -3,20 +3,22 @@ import { OfferType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
 import { useState } from 'react';
 import Map from '../../components/map/map';
+import LocationGroup from '../../components/location-group/location-group';
+
+const CURRENT_CITY = 'Paris';
 
 type MainProps = {
-  offersCount: number;
   offers: OfferType[];
 };
 
-function Main({offersCount, offers}:MainProps): JSX.Element {
+function Main({offers}:MainProps): JSX.Element {
   const [isActiveOffer, setIsActiveOffer] = useState<string | null>(null);
   const handleActiveOfferChange = (id: string | null) => setIsActiveOffer(id);
 
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
-      <Tabs />
+      <LocationGroup currentCity={CURRENT_CITY} />
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
@@ -48,10 +50,7 @@ function Main({offersCount, offers}:MainProps): JSX.Element {
             <OffersList onHandleActiveOfferChange={handleActiveOfferChange} offers={offers}/>
           </section>
           <div className="cities__right-section">
-            {/* <section className="cities__map map" /> */}
-            <section className="cities__map map">
-              <Map offers={offers} isActiveOffer={isActiveOffer} city={offers[0].city} />
-            </section>
+            <Map offers={offers} isActiveOffer={isActiveOffer} city={offers[0].city} className="cities" />
           </div>
         </div>
       </div>
