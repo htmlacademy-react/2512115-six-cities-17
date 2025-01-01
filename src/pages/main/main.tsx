@@ -1,4 +1,3 @@
-import Tabs from '../../components/tabs/tabs';
 import { OfferType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
 import { useState } from 'react';

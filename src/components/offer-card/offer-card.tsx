@@ -24,8 +24,8 @@ function OfferCard({offer, offerCardType, onHandleActiveOfferChange}: AppProps):
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={offerCardType === 'cities' || 'near-places' ? '260' : '150'}
-            height={offerCardType === 'cities' || 'near-places' ? '200' : '110'}
+            width={offerCardType === 'cities' || offerCardType === 'near-places' ? '260' : '150'}
+            height={offerCardType === 'cities' || offerCardType === 'near-places' ? '200' : '110'}
             alt="Place image"
           />
         </Link>
@@ -33,7 +33,7 @@ function OfferCard({offer, offerCardType, onHandleActiveOfferChange}: AppProps):
       <div className={`${offerCardType === 'favorites' ? `${offerCardType}__card-info ` : ''}place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">{offer.price}</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button

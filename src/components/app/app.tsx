@@ -43,7 +43,7 @@ function App({offers, comments, offerFull}: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer offerFull={offerFull} comments={comments}/>}
+              element={<Offer offerFull={offerFull} comments={comments} offers={offers}/>}
             />
             <Route
               path='*'
