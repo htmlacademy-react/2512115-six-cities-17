@@ -24,6 +24,39 @@ export type OfferType = {
   rating: number;
 };
 
+export type OfferFullType = {
+    id: string;
+    title: string;
+    type: string;
+    price: number;
+    city: {
+      name: string;
+      location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+      };
+    };
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+      };
+    isFavorite: boolean;
+    isPremium: boolean;
+    rating: number;
+    description: string;
+    bedrooms: number;
+    goods: [string];
+    host: {
+      name: string;
+      avatarUrl: string;
+      isPro: boolean;
+      };
+    images: [string];
+    maxAdults: number;
+};
+
 export type OfferCardType = 'favorites' | 'cities' | 'near-places';
 
 export type RatingType = number | null;
@@ -39,3 +72,9 @@ export type CommentType = {
   comment: string;
   rating: number;
 };
+
+import { store } from './store';
+
+export type State = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+

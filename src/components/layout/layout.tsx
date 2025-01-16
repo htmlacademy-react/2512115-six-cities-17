@@ -16,7 +16,7 @@ function Layout() {
     titleName += ' Login';
   } else if (pathname as AppRoute === AppRoute.Favorites) {
     titleName += ' Favorites';
-  } else if (pathname as AppRoute === AppRoute.Offer) {
+  } else if ((pathname as AppRoute).includes(AppRoute.Offer.replace(':id', ''))) {
     titleName += ' Offer';
   } else if (pathname === '/*') {
     titleName += ' Error 404';

@@ -1,60 +1,33 @@
-import Tabs from '../../components/tabs/tabs';
-import { OfferType } from '../../types';
 import OffersList from '../../components/offers-list/offers-list';
 import { useState } from 'react';
 import Map from '../../components/map/map';
+import LocationGroup from '../../components/location-group/location-group';
+import { useAppSelector } from '../../hooks';
+import OffersEmpty from '../offers-empty/offers-empty';
 
-type MainProps = {
-  offersCount: number;
-  offers: OfferType[];
-};
+function Main(): JSX.Element {
+  const offerCards = useAppSelector((state) => state.offerCards);
+  const currentCity = useAppSelector((state) => state.currentCity);
+  const cityOfferCards = offerCards.filter((offerCard) => offerCard.city.name === currentCity);
 
-function Main({offersCount, offers}:MainProps): JSX.Element {
   const [isActiveOffer, setIsActiveOffer] = useState<string | null>(null);
   const handleActiveOfferChange = (id: string | null) => setIsActiveOffer(id);
+  // const mapPoints = getMapPoints(offerCards);
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index${cityOfferCards.length > 0 ? '' : ' page__main--index-empty'}`}>
       <h1 className="visually-hidden">Cities</h1>
-      <Tabs />
+      <LocationGroup currentCity={currentCity} />
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{offers.length} places to stay in Amsterdam</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width={7} height={4}>
-                  <use xlinkHref="#icon-arrow-select" />
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>
-                  Popular
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Price: low to high
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Price: high to low
-                </li>
-                <li className="places__option" tabIndex={0}>
-                  Top rated first
-                </li>
-              </ul>
-            </form>
-            <OffersList onHandleActiveOfferChange={handleActiveOfferChange} offers={offers}/>
-          </section>
-          <div className="cities__right-section">
-            {/* <section className="cities__map map" /> */}
-            <section className="cities__map map">
-              <Map offers={offers} isActiveOffer={isActiveOffer} city={offers[0].city} />
-            </section>
-          </div>
+        <div className={`cities__places-container container${cityOfferCards.length > 0 ? '' : ' cities__places_container--empty'}`}>
+          {cityOfferCards.length > 0 ?
+            <OffersList onHandleActiveOfferChange={handleActiveOfferChange} offers={cityOfferCards} currentCity={currentCity} /> :
+            <OffersEmpty cityName={currentCity} />}
+
+          {cityOfferCards[0] !== undefined ? <Map offers={cityOfferCards} isActiveOffer={isActiveOffer} city={cityOfferCards[0].city} className="cities" /> : null }
         </div>
       </div>
+
     </main>
   );
 }

@@ -8,13 +8,13 @@ type FormDataType = {
 };
 
 const initialState: FormDataType = {
-  rating: null,
+  rating: 0,
   review: '',
 };
 
 function CommentForm() {
   const [formData, setFormData] = useState<FormDataType>(initialState);
-  const [isButtonSubmitDisabled, setIsButtonSubmitDisabled] = useState(true);
+  const isButtonSubmitDisabled = formData.rating === 0 || (formData.review.length < 50 || formData.review.length > 300);
 
   const handleChangeRating = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -22,9 +22,6 @@ function CommentForm() {
       rating: Number(e.target.value),
     }));
 
-    setIsButtonSubmitDisabled(
-      e.target.value === null
-    );
   };
 
   const handleChangeReview = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,15 +30,11 @@ function CommentForm() {
       review: e.target.value,
     }));
 
-    setIsButtonSubmitDisabled(
-      e.target.value.length <= 50 || e.target.value.length > 300
-    );
   };
 
   const handleSubmitForm = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormData(initialState);
-    setIsButtonSubmitDisabled(true);
   };
 
 
