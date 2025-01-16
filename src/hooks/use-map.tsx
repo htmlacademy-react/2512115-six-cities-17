@@ -9,6 +9,17 @@ function useMap(
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+
+  // useEffect(() => {
+  //   if (map) {
+  //     map.panTo({
+  //       lat: location.latitude,
+  //       lng: location.longitude,
+  //     });
+  //   }
+  // }, [location, map]);
+
+
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {

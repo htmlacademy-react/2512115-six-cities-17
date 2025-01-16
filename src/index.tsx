@@ -8,10 +8,6 @@ import { store } from './store';
 import { loadOfferCards } from './store/action';
 import { OFFERS_FULL_MOCK } from './mocks/offers-full';
 
-const Settings = {
-  OffersCount: 5,
-} as const;
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -25,7 +21,6 @@ root.render(
         offers={OFFERS_MOCK}
         offerFull={OFFERS_FULL_MOCK}
         comments={COMMENTS_MOCK}
-        offersCount={Settings.OffersCount}
       />
     </Provider>
   </React.StrictMode>

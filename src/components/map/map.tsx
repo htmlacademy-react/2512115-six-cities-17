@@ -50,7 +50,10 @@ function Map({city, offers, isActiveOffer, className}: MapProps): JSX.Element {
       };
     }
   }, [map, offers, isActiveOffer]);
-  return <section className={`${className}__map map`} ref={mapRef}></section>;
+  return (
+    <div className="cities__right-section">
+      <section className={`${className}__map map`} ref={mapRef}></section>;
+    </div>);
 }
 
 export default Map;
