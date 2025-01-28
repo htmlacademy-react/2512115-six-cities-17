@@ -1,6 +1,7 @@
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
+import { logoutAction } from '../../store/api-actions';
 
 function Layout() {
   const {pathname} = useLocation();
@@ -53,9 +54,16 @@ function Layout() {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <Link
+                      onClick={(evt) => {
+                        evt.preventDefault();
+                        dispatch(logoutAction ());
+                      }}
+                      className="header__nav-link"
+                      to="/"
+                    >
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

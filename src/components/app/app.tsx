@@ -10,6 +10,10 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import Layout from '../layout/layout';
 import { CommentType, OfferFullType, OfferType } from '../../types';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   offers: OfferType[];
@@ -18,9 +22,18 @@ type AppProps = {
 }
 
 function App({offers, comments, offerFull}: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index
@@ -35,7 +48,7 @@ function App({offers, comments, offerFull}: AppProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute
-                  authorizationStatus={AuthorizationStatus.Auth}
+                  authorizationStatus={AuthorizationStatus}
                 >
                   <Favorites offers={offers}/>
                 </PrivateRoute>
@@ -51,7 +64,7 @@ function App({offers, comments, offerFull}: AppProps): JSX.Element {
             />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
