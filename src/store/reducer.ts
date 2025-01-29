@@ -1,12 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { CITIES, SortItem } from '../const';
-import { OfferType } from '../types';
-import { changeCity, changeSorting, loadOfferCards } from './action';
+import { AuthorizationStatus, CITIES, SortItem } from '../const';
+import { CommentType, OfferFullType, OfferType } from '../types';
+import { changeCity, changeSorting, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setCardsLoadingStatus, setError } from './action';
 
 const initialState = {
   currentCity: CITIES[0],
   currentSort: SortItem.Popular,
-  offerCards: [] as OfferType[],
+  offerCards: [] as OfferFullType[],
+  isOffersLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
+  currentOffer: null as OfferFullType | null,
+  commentsOffer: [] as CommentType[],
+  nearOfferCards: [] as OfferFullType[],
+  favoritesCards: [] as OfferType[],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -14,10 +21,31 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOfferCards, (state, action) => {
       state.offerCards = action.payload;
     })
+    .addCase(loadCurrentOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.commentsOffer = action.payload;
+    })
+    .addCase(loadNearOfferCards, (state, action) => {
+      state.nearOfferCards = action.payload;
+    })
+    .addCase(loadFavoritesCards, (state, action) => {
+      state.favoritesCards = action.payload;
+    })
     .addCase(changeCity, (state, action) => {
       state.currentCity = action.payload;
     })
     .addCase(changeSorting, (state, action) => {
       state.currentSort = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setCardsLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
     });
 });

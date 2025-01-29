@@ -10,14 +10,14 @@ function useMap(
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
-  // useEffect(() => {
-  //   if (map) {
-  //     map.panTo({
-  //       lat: location.latitude,
-  //       lng: location.longitude,
-  //     });
-  //   }
-  // }, [location, map]);
+  useEffect(() => {
+    if (map) {
+      map.panTo({
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      });
+    }
+  }, [city.location, map]);
 
 
   useEffect(() => {

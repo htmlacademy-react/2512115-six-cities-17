@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { OfferCardType, OfferType } from '../../types';
+import { OfferCardType, OfferFullType } from '../../types';
 import { AppRoute } from '../../const';
 
 type AppProps = {
-  offer: OfferType;
+  offer: OfferFullType;
   offerCardType: OfferCardType;
   onHandleActiveOfferChange?: (id: string | null) => void;
 }
