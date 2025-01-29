@@ -1,8 +1,8 @@
-import { OfferType } from '../../types';
+import { OfferFullType } from '../../types';
 import OfferCard from '../offer-card/offer-card';
 
 type FavProps = {
-  offers: OfferType[];
+  offers: OfferFullType[];
   city: string;
 };
 

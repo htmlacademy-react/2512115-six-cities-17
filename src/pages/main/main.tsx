@@ -12,7 +12,6 @@ function Main(): JSX.Element {
 
   const [isActiveOffer, setIsActiveOffer] = useState<string | null>(null);
   const handleActiveOfferChange = (id: string | null) => setIsActiveOffer(id);
-  // const mapPoints = getMapPoints(offerCards);
 
   return (
     <main className={`page__main page__main--index${cityOfferCards.length > 0 ? '' : ' page__main--index-empty'}`}>

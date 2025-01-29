@@ -1,11 +1,11 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { CityType, OfferType } from '../../types';
+import { CityType, OfferFullType } from '../../types';
 
 type MapProps = {
   city: CityType;
-  offers: OfferType[];
+  offers: OfferFullType[];
   isActiveOffer: string | null;
   className: string;
 };
