@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { loadComments, loadCurrentOffer, loadNearOfferCards, loadOfferCards, redirectToRoute, requireAuthorization, setCardsLoadingStatus, setError } from './action';
+import { loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, redirectToRoute, requireAuthorization, setCardsLoadingStatus, setError } from './action';
 import { APIRoutes, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { AppDispatch, AuthData, CommentType, OfferFullType, OfferType, State, UserData } from '../types';
 import { dropToken, saveToken } from '../services/token';
@@ -24,7 +24,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
   'cards/fetchCards',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setCardsLoadingStatus(true));
-    const {data} = await api.get<OfferType[]>(APIRoutes.Cards);
+    const {data} = await api.get<OfferFullType[]>(APIRoutes.Cards);
     dispatch(setCardsLoadingStatus(false));
     dispatch(loadOfferCards(data));
   },
@@ -61,9 +61,9 @@ export const fetchFavorites = createAsyncThunk<void, string, {
   extra: AxiosInstance;
 }>(
   'data/fetchFavorites',
-  async (offerId, {dispatch, extra: api}) => {
-    const {data} = await api.get<OfferType>(APIRoutes.Favorites);
-    dispatch(loadFavorites(data));
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType[]>(APIRoutes.Favorites);
+    dispatch(loadFavoritesCards(data));
 
   }
 );
