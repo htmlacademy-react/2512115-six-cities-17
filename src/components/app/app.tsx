@@ -1,6 +1,7 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
+
 import Main from '../../pages/main/main';
 import Offer from '../../pages/offer/offer';
 import Favorites from '../../pages/favorites/favorites';
