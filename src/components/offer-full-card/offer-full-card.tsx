@@ -1,15 +1,15 @@
-import { CommentType, OfferFullType, OfferType } from '../../types';
+import { CommentType, OfferFullType } from '../../types';
 import CommentForm from '../comment-form/comment-form';
 import CommentList from '../comment-list/comment-list';
 import Map from '../map/map';
 
 type OfferFullCardProps = {
-  offerFull: OfferFullType;
+  currentOffer: OfferFullType;
   comments: CommentType[];
-  offers: OfferType[];
+  nearOfferCards: OfferFullType[];
 }
 
-function OfferFullCard({offerFull, comments, offers}: OfferFullCardProps): JSX.Element {
+function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardProps): JSX.Element {
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
@@ -56,14 +56,14 @@ function OfferFullCard({offerFull, comments, offers}: OfferFullCardProps): JSX.E
       </div>
       <div className="offer__container container">
         <div className="offer__wrapper">
-          {offerFull.isPremium && (
+          {currentOffer.isPremium && (
             <div className="offer__mark">
               <span>Premium</span>
             </div>
           )}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">
-              {offerFull.title}
+              {currentOffer.title}
             </h1>
             <button className="offer__bookmark-button button" type="button">
               <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -74,28 +74,28 @@ function OfferFullCard({offerFull, comments, offers}: OfferFullCardProps): JSX.E
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
-              <span style={{ width: `${offerFull.rating * 20}%` }} />
+              <span style={{ width: `${currentOffer.rating * 20}%` }} />
               <span className="visually-hidden">Rating</span>
             </div>
-            <span className="offer__rating-value rating__value">{offerFull.rating}</span>
+            <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
           </div>
           <ul className="offer__features">
-            <li className="offer__feature offer__feature--entire">{offerFull.type}</li>
+            <li className="offer__feature offer__feature--entire">{currentOffer.type}</li>
             <li className="offer__feature offer__feature--bedrooms">
-              {offerFull.bedrooms} Bedrooms
+              {currentOffer.bedrooms} Bedrooms
             </li>
             <li className="offer__feature offer__feature--adults">
-              Max {offerFull.maxAdults} adults
+              Max {currentOffer.maxAdults} adults
             </li>
           </ul>
           <div className="offer__price">
-            <b className="offer__price-value">€{offerFull.price}</b>
+            <b className="offer__price-value">€{currentOffer.price}</b>
             <span className="offer__price-text">&nbsp;night</span>
           </div>
           <div className="offer__inside">
             <h2 className="offer__inside-title">What&apos;s inside</h2>
             <ul className="offer__inside-list">
-              {offerFull.goods.map((good) => (
+              {currentOffer.goods.map((good) => (
                 <li key={good} className="offer__inside-item">{good}</li>
               ))}
             </ul>
@@ -106,18 +106,18 @@ function OfferFullCard({offerFull, comments, offers}: OfferFullCardProps): JSX.E
               <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
                 <img
                   className="offer__avatar user__avatar"
-                  src={offerFull.host.avatarUrl}
+                  src={currentOffer.host.avatarUrl}
                   width={74}
                   height={74}
                   alt="Host avatar"
                 />
               </div>
-              <span className="offer__user-name">{offerFull.host.name}</span>
-              <span className="offer__user-status">{offerFull.host.isPro}</span>
+              <span className="offer__user-name">{currentOffer.host.name}</span>
+              <span className="offer__user-status">{currentOffer.host.isPro}</span>
             </div>
             <div className="offer__description">
               <p className="offer__text">
-                {offerFull.description}
+                {currentOffer.description}
               </p>
             </div>
           </div>
@@ -127,10 +127,11 @@ function OfferFullCard({offerFull, comments, offers}: OfferFullCardProps): JSX.E
           </section>
         </div>
       </div>
+
       <Map
-        offers={[...offers].sort((a, b) => (a.id === offerFull.id ? -1 : b.id === offerFull.id ? 1 : 0)).slice(0, 4)}
-        isActiveOffer={offerFull.id}
-        city={offers[0].city}
+        offers={[currentOffer, ...nearOfferCards]}
+        isActiveOffer={currentOffer.id}
+        city={currentOffer.city}
         className="offer"
       />
     </section>

@@ -23,7 +23,9 @@ export enum SortItem {
 export enum APIRoutes {
   Cards = '/offers',
   Login = '/login',
-  Logout = 'logout',
+  Logout = '/logout',
+  Comments = '/comments',
+  Favorites = '/favorite',
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
