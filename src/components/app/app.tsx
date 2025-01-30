@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
-
 import Main from '../../pages/main/main';
 import Offer from '../../pages/offer/offer';
 import Favorites from '../../pages/favorites/favorites';
@@ -14,7 +13,6 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -42,9 +40,7 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute
-                  authorizationStatus={AuthorizationStatus}
-                >
+                <PrivateRoute >
                   <Favorites />
                 </PrivateRoute>
               }
