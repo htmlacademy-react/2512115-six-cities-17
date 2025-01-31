@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, CITIES, SortItem } from '../const';
-import { CommentType, OfferFullType, OfferType } from '../types';
-import { changeCity, changeSorting, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setCardsLoadingStatus, setError } from './action';
+import { CommentType, OfferFullType, OfferType, UserData } from '../types';
+import { changeCity, changeSorting, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setAuthData, setCardsLoadingStatus, setError } from './action';
 
 const initialState = {
   currentCity: CITIES[0],
@@ -14,6 +14,8 @@ const initialState = {
   commentsOffer: [] as CommentType[],
   nearOfferCards: [] as OfferFullType[],
   favoritesCards: [] as OfferType[],
+  userData: null as UserData | null,
+
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -41,6 +43,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setAuthData, (state, action) => {
+      state.userData = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
