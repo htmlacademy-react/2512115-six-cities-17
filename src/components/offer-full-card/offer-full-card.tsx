@@ -1,6 +1,8 @@
+import { getRatingInPercents } from '../../helpers';
 import { CommentType, OfferFullType, OfferType } from '../../types';
 import CommentForm from '../comment-form/comment-form';
 import CommentList from '../comment-list/comment-list';
+import FavoriteButton from '../favorite-button/favorite-button';
 import Map from '../map/map';
 
 type OfferFullCardProps = {
@@ -65,16 +67,11 @@ function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardPr
             <h1 className="offer__name">
               {currentOffer.title}
             </h1>
-            <button className="offer__bookmark-button button" type="button">
-              <svg className="offer__bookmark-icon" width={31} height={33}>
-                <use xlinkHref="#icon-bookmark" />
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton isFavorite={currentOffer.isFavorite} offerId={currentOffer.id} favoriteBtnType='offer' />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
-              <span style={{ width: `${currentOffer.rating * 20}%` }} />
+              <span style={{width: getRatingInPercents(currentOffer.rating)}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
             <span className="offer__rating-value rating__value">{currentOffer.rating}</span>

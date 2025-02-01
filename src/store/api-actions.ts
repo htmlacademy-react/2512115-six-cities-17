@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { addComment, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, redirectToRoute, requireAuthorization, setAuthData, setCardsLoadingStatus, setCommentUploadStatus, setError } from './action';
-import { APIRoutes, AppRoute, AuthorizationStatus, RequestStatus, TIMEOUT_SHOW_ERROR } from '../const';
+import { addComment, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setAuthData, setCardsLoadingStatus, setCommentUploadStatus, setError, setFavoriteStatus } from './action';
+import { APIRoutes, AuthorizationStatus, RequestStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { AppDispatch, AuthData, CommentType, OfferFullType, OfferType, State, UploadCommentData, UserData } from '../types';
 import { dropToken, saveToken } from '../services/token';
 import { store } from './';
@@ -41,11 +41,19 @@ export const fetchCurrentOffer = createAsyncThunk<void, string, AppThunkArgs>(
 );
 
 export const fetchComments = createAsyncThunk<void, string, AppThunkArgs>(
-  'data/fetchOfferReviews',
+  'data/fetcOfferComments',
   async (offerId, {dispatch, extra: api}) => {
     const {data} = await api.get<CommentType[]>(`${APIRoutes.Comments}/${offerId}`);
     dispatch(loadComments(data));
+  }
+);
 
+export const toggleFavorite = createAsyncThunk<void, { offerId: string; status: number }, AppThunkArgs>(
+  'data/toggleFavorite',
+  async ({ offerId, status }, { dispatch, extra: api }) => {
+    const { data } = await api.post<OfferFullType>(`${APIRoutes.Favorites}/${offerId}/${status}`);
+
+    dispatch(setFavoriteStatus(data));
   }
 );
 
@@ -68,7 +76,6 @@ export const fetchFavorites = createAsyncThunk<void, undefined, AppThunkArgs>(
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OfferType[]>(APIRoutes.Favorites);
     dispatch(loadFavoritesCards(data));
-
   }
 );
 
@@ -105,4 +112,5 @@ export const logoutAction = createAsyncThunk<void, undefined, AppThunkArgs>
   await api.delete(APIRoutes.Logout);
   dropToken();
   dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  dispatch(setAuthData(null));
 });

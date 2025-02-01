@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, CITIES, RequestStatus, SortItem } from '../const';
 import { CommentType, OfferFullType, OfferType, UserData } from '../types';
-import { addComment, changeCity, changeSorting, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setAuthData, setCardsLoadingStatus, setCommentUploadStatus, setError } from './action';
+import { addComment, changeCity, changeSorting, loadComments, loadCurrentOffer, loadFavoritesCards, loadNearOfferCards, loadOfferCards, requireAuthorization, setAuthData, setCardsLoadingStatus, setCommentUploadStatus, setError, setFavoriteStatus } from './action';
 
 const initialState = {
   currentCity: CITIES[0],
@@ -40,6 +40,19 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoritesCards, (state, action) => {
       state.favoritesCards = action.payload;
+      const favoriteIds = new Set(action.payload.map((offer) => offer.id));
+
+      state.offerCards.forEach((offer) => {
+        offer.isFavorite = favoriteIds.has(offer.id);
+      });
+
+      state.nearOfferCards.forEach((offer) => {
+        offer.isFavorite = favoriteIds.has(offer.id);
+      });
+
+      if (state.currentOffer) {
+        state.currentOffer.isFavorite = favoriteIds.has(state.currentOffer.id);
+      }
     })
     .addCase(changeCity, (state, action) => {
       state.currentCity = action.payload;
@@ -52,11 +65,39 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthData, (state, action) => {
       state.userData = action.payload;
+      if (!action.payload) {
+        state.offerCards.forEach((offer) => (offer.isFavorite = false));
+        state.nearOfferCards.forEach((offer) => (offer.isFavorite = false));
+        if (state.currentOffer) {
+          state.currentOffer.isFavorite = false;
+        }
+      }
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
     .addCase(setCardsLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;
+    })
+    .addCase(setFavoriteStatus, (state, action) => {
+      const updatedOffer = action.payload;
+
+      if (updatedOffer.isFavorite) {
+        state.favoritesCards.push(updatedOffer);
+      } else {
+        state.favoritesCards = state.favoritesCards.filter((offer) => offer.id !== updatedOffer.id);
+      }
+
+      state.offerCards = state.offerCards.map((offer) =>
+        offer.id === updatedOffer.id ? updatedOffer : offer
+      );
+
+      state.nearOfferCards = state.nearOfferCards.map((offer) =>
+        offer.id === updatedOffer.id ? updatedOffer : offer
+      );
+
+      if (state.currentOffer?.id === updatedOffer.id) {
+        state.currentOffer = updatedOffer;
+      }
     });
 });

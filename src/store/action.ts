@@ -26,3 +26,5 @@ export const setError = createAction<string | null>('app/setError');
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
 
 export const setAuthData = createAction<UserData | null>('user/setAuthData');
+
+export const setFavoriteStatus = createAction<OfferFullType>('app/setFavoriteStatus');

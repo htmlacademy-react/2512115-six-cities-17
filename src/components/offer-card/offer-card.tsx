@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { OfferCardType, OfferType } from '../../types';
 import { AppRoute } from '../../const';
+import FavoriteButton from '../favorite-button/favorite-button';
+import { getRatingInPercents } from '../../helpers';
 
 type AppProps = {
   offer: OfferType;
@@ -36,23 +38,11 @@ function OfferCard({offer, offerCardType, onHandleActiveOfferChange}: AppProps):
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button
-            className="place-card__bookmark-button button"
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width={18}
-              height={19}
-            >
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton isFavorite={offer.isFavorite} offerId={offer.id} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: offerCardType === 'favorites' ? '100%' : '80%' }} />
+            <span style={{width: getRatingInPercents(offer.rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

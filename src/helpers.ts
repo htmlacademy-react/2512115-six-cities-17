@@ -1,6 +1,8 @@
 import { SortItem } from './const';
 import { OfferType } from './types';
 
+export const getRatingInPercents = (rating: number) => `${Math.round(rating) * 20}%`;
+
 const sortOffers = (offers: OfferType[], sortingType: SortItem): OfferType[] => {
   switch (sortingType){
     case SortItem.Popular:
