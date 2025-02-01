@@ -1,4 +1,4 @@
-import { CommentType, OfferFullType } from '../../types';
+import { CommentType, OfferFullType, OfferType } from '../../types';
 import CommentForm from '../comment-form/comment-form';
 import CommentList from '../comment-list/comment-list';
 import Map from '../map/map';
@@ -6,7 +6,7 @@ import Map from '../map/map';
 type OfferFullCardProps = {
   currentOffer: OfferFullType;
   comments: CommentType[];
-  nearOfferCards: OfferFullType[];
+  nearOfferCards: OfferType[];
 }
 
 function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardProps): JSX.Element {
@@ -123,7 +123,7 @@ function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardPr
           </div>
           <section className="offer__reviews reviews">
             <CommentList comments={comments}/>
-            <CommentForm/>
+            <CommentForm offerId={currentOffer.id} />
           </section>
         </div>
       </div>

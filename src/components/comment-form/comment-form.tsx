@@ -1,5 +1,9 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { RatingType } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { RequestStatus } from '../../const';
+import { setCommentUploadStatus } from '../../store/action';
+import { uploadComment } from '../../store/api-actions';
 
 
 type FormDataType = {
@@ -12,9 +16,25 @@ const initialState: FormDataType = {
   review: '',
 };
 
-function CommentForm() {
+type CommentFormProps = {
+  offerId: string;
+}
+
+function CommentForm({ offerId }: CommentFormProps) {
   const [formData, setFormData] = useState<FormDataType>(initialState);
-  const isButtonSubmitDisabled = formData.rating === 0 || (formData.review.length < 50 || formData.review.length > 300);
+  const dispatch = useAppDispatch();
+  const commentUploadStatus = useAppSelector((state) => state.commentUploadStatus);
+  const isButtonSubmitDisabled = formData.review.length >= 50 && formData.review.length < 300 && formData.rating > 0 && commentUploadStatus !== RequestStatus.Uploading;
+
+  useEffect(() => {
+    if (commentUploadStatus === RequestStatus.Success) {
+      setFormData({
+        review: '',
+        rating: 0,
+      });
+      dispatch(setCommentUploadStatus(RequestStatus.Idle));
+    }
+  }, [commentUploadStatus, dispatch]);
 
   const handleChangeRating = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -32,18 +52,24 @@ function CommentForm() {
 
   };
 
-  const handleSubmitForm = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormData(initialState);
-  };
-
+  // const handleSubmitForm = (e: ChangeEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setFormData(initialState);
+  // };
 
   return (
     <form
-      onSubmit={handleSubmitForm}
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={(evt) => {
+        evt.preventDefault();
+        dispatch(uploadComment({
+          offerId,
+          comment: formData.review,
+          rating: formData.rating,
+        }));
+      }}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -153,7 +179,7 @@ function CommentForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isButtonSubmitDisabled}
+          disabled={!isButtonSubmitDisabled}
         >
           Submit
         </button>

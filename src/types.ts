@@ -59,7 +59,7 @@ export type OfferFullType = {
 
 export type OfferCardType = 'favorites' | 'cities' | 'near-places';
 
-export type RatingType = number | null;
+export type RatingType = number;
 
 export type CommentType = {
   id: string;
@@ -72,6 +72,12 @@ export type CommentType = {
   comment: string;
   rating: number;
 };
+
+export type UploadCommentData = {
+  offerId: string;
+  comment: string;
+  rating: number;
+}
 
 import { store } from './store';
 

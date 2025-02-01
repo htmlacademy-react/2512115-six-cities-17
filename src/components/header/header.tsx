@@ -10,6 +10,7 @@ function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const userData: UserData | null = useAppSelector((state) => state.userData);
   const dispatch = useAppDispatch();
+  const favoritesCards = useAppSelector((state) => state.favoritesCards);
 
   return (
     <header className="header">
@@ -40,7 +41,7 @@ function Header(): JSX.Element {
                         <span className="header__user-name user__name">
                           {userData?.email}
                         </span>
-                        <span className="header__favorite-count">2</span>
+                        <span className="header__favorite-count">{favoritesCards.length}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

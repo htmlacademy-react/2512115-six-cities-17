@@ -5,14 +5,15 @@ import { useAppSelector } from '../../hooks';
 
 type PrivateRouteProps = {
   children: JSX.Element;
+  reversed?: boolean;
 }
 
-function PrivateRoute({children}: PrivateRouteProps): JSX.Element {
+function PrivateRoute({ children, reversed = false }: PrivateRouteProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
-    authorizationStatus === AuthorizationStatus.Auth
+    authorizationStatus === (reversed ? AuthorizationStatus.NoAuth : AuthorizationStatus.Auth)
       ? children
-      : <Navigate to={AppRoute.Login} replace />
+      : <Navigate to={reversed ? AppRoute.Main : AppRoute.Login} replace />
   );
 }
 
