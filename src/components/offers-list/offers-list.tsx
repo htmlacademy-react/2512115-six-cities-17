@@ -1,11 +1,11 @@
 import { sortOffers } from '../../helpers';
 import { useAppSelector } from '../../hooks';
-import { OfferType } from '../../types';
+import { OfferFullType, OfferType } from '../../types';
 import OfferCard from '../offer-card/offer-card';
 import Sorting from '../sorting/sorting';
 
 type AppProps = {
-  offers: OfferType[];
+  offers: OfferType[] & OfferFullType[];
   onHandleActiveOfferChange?: (id: string | null) => void;
   currentCity: string;
 }

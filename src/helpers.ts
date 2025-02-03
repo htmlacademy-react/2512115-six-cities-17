@@ -20,3 +20,13 @@ const sortOffers = (offers: OfferType[], sortingType: SortItem): OfferType[] => 
 };
 
 export {sortOffers};
+
+export const formatDate = (isoDate: string): { formattedDate: string; dateTime: string } => {
+  const date = new Date(isoDate);
+
+  const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(date);
+
+  const dateTime = date.toISOString().split('T')[0];
+
+  return { formattedDate, dateTime };
+};

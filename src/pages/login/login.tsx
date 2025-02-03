@@ -1,6 +1,5 @@
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
-// import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 
 function Login(): JSX.Element {
@@ -8,7 +7,6 @@ function Login(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -49,11 +47,12 @@ function Login(): JSX.Element {
                 type="password"
                 name="password"
                 placeholder="Password"
+                pattern="^(?=.*[A-Za-z])(?=.*\d).+$"
+                title="Пароль должен содержать хотя бы одну букву и одну цифру."
                 required
               />
             </div>
             <button
-              // onClick={() => navigate(AppRoute.Main)}
               className="login__submit form__submit button"
               type="submit"
             >

@@ -5,7 +5,6 @@ import { RequestStatus } from '../../const';
 import { setCommentUploadStatus } from '../../store/action';
 import { uploadComment } from '../../store/api-actions';
 
-
 type FormDataType = {
   rating: RatingType;
   review: string;
@@ -51,11 +50,6 @@ function CommentForm({ offerId }: CommentFormProps) {
     }));
 
   };
-
-  // const handleSubmitForm = (e: ChangeEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setFormData(initialState);
-  // };
 
   return (
     <form
