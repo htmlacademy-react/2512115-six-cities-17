@@ -1,11 +1,11 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { CityType, OfferFullType } from '../../types';
+import { CityType, OfferFullType, OfferType } from '../../types';
 
 type MapProps = {
   city: CityType;
-  offers: OfferFullType[];
+  offers: OfferType[];
   isActiveOffer: string | null;
   className: string;
 };
@@ -52,7 +52,7 @@ function Map({city, offers, isActiveOffer, className}: MapProps): JSX.Element {
   }, [map, offers, isActiveOffer]);
   return (
     <div className="cities__right-section">
-      <section className={`${className}__map map`} ref={mapRef}></section>;
+      <section className={`${className}__map map`} ref={mapRef}></section>
     </div>);
 }
 

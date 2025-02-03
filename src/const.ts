@@ -28,4 +28,11 @@ export enum APIRoutes {
   Favorites = '/favorite',
 }
 
+export enum RequestStatus {
+  Idle = 'Idle',
+  Uploading = 'Uploading',
+  Success = 'Success',
+  Error = 'Error',
+}
+
 export const TIMEOUT_SHOW_ERROR = 2000;

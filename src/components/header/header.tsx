@@ -1,12 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import { UserData } from '../../types';
 
 function Header(): JSX.Element {
   const {pathname} = useLocation();
   const headerRightSide = pathname as AppRoute !== AppRoute.Login;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const userData: UserData | null = useAppSelector((state) => state.userData);
   const dispatch = useAppDispatch();
+  const favoritesCards = useAppSelector((state) => state.favoritesCards);
+
   return (
     <header className="header">
       <div className="container">
@@ -25,27 +30,41 @@ function Header(): JSX.Element {
           {headerRightSide && (
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">2</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      dispatch(logoutAction ());
-                    }}
-                    className="header__nav-link"
-                    to="/"
-                  >
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                {authorizationStatus === AuthorizationStatus.Auth ? (
+                  <>
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                        <div
+                          className="header__avatar-wrapper user__avatar-wrapper"
+                          style={{backgroundImage: userData?.avatarUrl ? `url(${userData?.avatarUrl})` : '', borderRadius: '50%'}}
+                        />
+                        <span className="header__user-name user__name">
+                          {userData?.email}
+                        </span>
+                        <span className="header__favorite-count">{favoritesCards.length}</span>
+                      </Link>
+                    </li>
+                    <li className="header__nav-item">
+                      <Link
+                        onClick={(evt) => {
+                          evt.preventDefault();
+                          dispatch(logoutAction());
+                        }}
+                        className="header__nav-link"
+                        to="/"
+                      >
+                        <span className="header__signout">Sign out</span>
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <li className="header__nav-item">
+                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__login">Sign in</span>
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
           )}
