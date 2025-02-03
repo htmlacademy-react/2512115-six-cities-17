@@ -1,3 +1,4 @@
+import { formatDate } from '../../helpers';
 import { CommentType } from '../../types';
 
 
@@ -6,6 +7,7 @@ type CommentItemProps = {
 };
 
 function CommentItem({ comment }: CommentItemProps): JSX.Element {
+  const { formattedDate, dateTime } = formatDate(comment.date);
   return (
     <>
       <div className="reviews__user user">
@@ -30,8 +32,8 @@ function CommentItem({ comment }: CommentItemProps): JSX.Element {
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">
-          April 2019
+        <time className="reviews__time" dateTime={dateTime}>
+          {formattedDate}
         </time>
       </div>
     </>

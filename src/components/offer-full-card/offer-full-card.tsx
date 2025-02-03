@@ -1,4 +1,6 @@
+import { AuthorizationStatus } from '../../const';
 import { getRatingInPercents } from '../../helpers';
+import { useAppSelector } from '../../hooks';
 import { CommentType, OfferFullType, OfferType } from '../../types';
 import CommentForm from '../comment-form/comment-form';
 import CommentList from '../comment-list/comment-list';
@@ -6,54 +8,24 @@ import FavoriteButton from '../favorite-button/favorite-button';
 import Map from '../map/map';
 
 type OfferFullCardProps = {
-  currentOffer: OfferFullType;
+  currentOffer: OfferFullType & OfferType;
   comments: CommentType[];
   nearOfferCards: OfferType[];
 }
 
 function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const displayedImages = [...currentOffer.images].slice(0, 6);
+
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          <div className="offer__image-wrapper">
-            <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-02.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-03.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/studio-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
-          <div className="offer__image-wrapper">
-            <img
-              className="offer__image"
-              src="img/apartment-01.jpg"
-              alt="Photo studio"
-            />
-          </div>
+          {displayedImages.map((image, index) => (
+            <div key={image} className="offer__image-wrapper">
+              <img className="offer__image" src={image} alt={`Offer photo ${index + 1}`} />
+            </div>
+          ))}
         </div>
       </div>
       <div className="offer__container container">
@@ -120,7 +92,9 @@ function OfferFullCard({currentOffer, comments, nearOfferCards}: OfferFullCardPr
           </div>
           <section className="offer__reviews reviews">
             <CommentList comments={comments}/>
-            <CommentForm offerId={currentOffer.id} />
+            {authorizationStatus === AuthorizationStatus.Auth && (
+              <CommentForm offerId={currentOffer.id} />
+            )}
           </section>
         </div>
       </div>
