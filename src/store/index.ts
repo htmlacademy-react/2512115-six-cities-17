@@ -15,5 +15,3 @@ export const store = configureStore({
       }
     }).concat(redirect),
 });
-
-// export const store = configureStore({reducer});
