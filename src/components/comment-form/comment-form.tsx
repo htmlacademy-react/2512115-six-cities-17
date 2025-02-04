@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { RatingType } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RequestStatus } from '../../const';
@@ -23,14 +23,14 @@ function CommentForm({ offerId }: CommentFormProps) {
   const [formData, setFormData] = useState<FormDataType>(initialState);
   const dispatch = useAppDispatch();
   const commentUploadStatus = useAppSelector((state) => state.commentUploadStatus);
-  const isButtonSubmitDisabled = formData.review.length >= 50 && formData.review.length < 300 && formData.rating > 0 && commentUploadStatus !== RequestStatus.Uploading;
+  const isFormDisabled = commentUploadStatus === RequestStatus.Uploading;
+  const isButtonSubmitDisabled =
+    formData.review.length >= 50 && formData.review.length < 300 &&
+    formData.rating > 0 && !isFormDisabled;
 
   useEffect(() => {
     if (commentUploadStatus === RequestStatus.Success) {
-      setFormData({
-        review: '',
-        rating: 0,
-      });
+      setFormData(initialState);
       dispatch(setCommentUploadStatus(RequestStatus.Idle));
     }
   }, [commentUploadStatus, dispatch]);
@@ -41,6 +41,18 @@ function CommentForm({ offerId }: CommentFormProps) {
       rating: Number(e.target.value),
     }));
 
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    dispatch(setCommentUploadStatus(RequestStatus.Uploading));
+
+    dispatch(uploadComment({
+      offerId,
+      comment: formData.review,
+      rating: formData.rating,
+    }));
   };
 
   const handleChangeReview = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -56,14 +68,7 @@ function CommentForm({ offerId }: CommentFormProps) {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt) => {
-        evt.preventDefault();
-        dispatch(uploadComment({
-          offerId,
-          comment: formData.review,
-          rating: formData.rating,
-        }));
-      }}
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -76,6 +81,7 @@ function CommentForm({ offerId }: CommentFormProps) {
           id="5-stars"
           type="radio"
           onChange={handleChangeRating}
+          disabled={isFormDisabled}
         />
         <label
           htmlFor="5-stars"
@@ -93,6 +99,7 @@ function CommentForm({ offerId }: CommentFormProps) {
           id="4-stars"
           type="radio"
           onChange={handleChangeRating}
+          disabled={isFormDisabled}
         />
         <label
           htmlFor="4-stars"
@@ -110,6 +117,7 @@ function CommentForm({ offerId }: CommentFormProps) {
           id="3-stars"
           type="radio"
           onChange={handleChangeRating}
+          disabled={isFormDisabled}
         />
         <label
           htmlFor="3-stars"
@@ -127,6 +135,7 @@ function CommentForm({ offerId }: CommentFormProps) {
           id="2-stars"
           type="radio"
           onChange={handleChangeRating}
+          disabled={isFormDisabled}
         />
         <label
           htmlFor="2-stars"
@@ -144,6 +153,7 @@ function CommentForm({ offerId }: CommentFormProps) {
           id="1-star"
           type="radio"
           onChange={handleChangeRating}
+          disabled={isFormDisabled}
         />
         <label
           htmlFor="1-star"
@@ -162,6 +172,7 @@ function CommentForm({ offerId }: CommentFormProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChangeReview}
         value={formData.review}
+        disabled={isFormDisabled}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
